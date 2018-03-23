@@ -32,5 +32,102 @@
         </tr>
     </table>
 </center>
+
+    <script>
+        
+        var universityContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_can_edit","type":"bool"}],"name":"editProfessor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"countStudents","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getProfessor","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getStudent","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getProfessors","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"studentsAccts","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getStudentWithPrivateInfo","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"countProfessors","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_view_private_info","type":"bool"},{"name":"_marks","type":"uint256"}],"name":"editStudent","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_can_edit","type":"bool"}],"name":"setProfessor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_view_private_info","type":"bool"},{"name":"_marks","type":"uint256"}],"name":"setStudent","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getStudents","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"professorAccts","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]);
+
+        var ownerAddress = '0x42C1519f7eB9a2489Df78fD6B9a81ec480593a8E';
+        
+        var universityContractAddress = '0x76B3Ce6ad64F95C68150ABBda0A6cd1df871c31F';
+        
+        
+        //i am coding all functions below
+        //take all required inputs using jquery
+        
+        function addProfessor(){
+            
+            var professorAddress = '0x86E8Cf3559DC53ccBA990551f0dBa01c5Df76bdA';
+            var profId = 1;
+            var profName = 'Professor 1';
+            var canEdit = true;
+        
+        
+            universityContract.at(universityContractAddress).setProfessor(professorAddress, profId, profName, canEdit, function(err, data){
+                if(err){
+                    console.error(err);
+                }else{
+                    console.log(data);//this will give you txn hash, better you alert this data
+                    //alert(data);//you can check this data in etherscan
+                }
+            });
+            
+        }
+        
+        //this function will work either owner adds this details or registered professor add this details
+        function addStudent(){
+            
+            var studentAddress = '0x21ef95FAE948145A52055F4c2cf9Fa0eeAf9f1e5';
+            var studentId = 1;
+            var studentName = 'Student 1';
+            var privateInfoCondtn = true;
+            var studentMarks = 70;
+            
+            
+            universityContract.at(universityContractAddress).setStudent(studentAddress, studentId, studentName, privateInfoCondtn, studentMarks, function(err, data){
+                
+                if(err){
+                    console.error(err);
+                }else{
+                    console.log(data);
+                }
+                
+            })
+            
+        }
+        
+        //all other functions are viewer functions
+        function getProfessorAddresses(){
+            universityContract.at(universityContractAddress).getProfessors(function(err, data){
+                if(err){
+                    console.error(err);
+                }else{
+                    //this data will contain array which contains all registered professor addresses
+                    console.log(data);
+                }
+            })
+        }
+        
+        function getStudentAddresses() {
+            universityContract.at(universityContractAddress).getStudents(function(err, data){
+                if(err){
+                    console.error(err);
+                }else{
+                    //this will give addresses of all students
+                    console.log(data);
+                }
+            })
+        }
+        
+        function getStudent(studentAddress){
+            
+            //enter address of any student, it will return you it's id, name, marks
+            universityContract.at(universityContractAddress).getStudentWithPrivateInfo(studentAddress, function(err, data){
+                
+                if(err){
+                    console.error(err);
+                }else{
+                    console.log(data);//parse down this JSON and show it on website
+                }
+                
+            })
+            
+        }
+        
+        
+        
+    </script>
+
+
 </body>
 </html>
