@@ -11,16 +11,16 @@
     <form onsubmit="NewClickFunction()">
     <table border="1">
         <tr>
+            <td>ID</td>
+            <td><input id="studentId" type="text"></td>
+        </tr>
+        <tr>
             <td>Name</td>
             <td><input id="Name" type="text"></td>
         </tr>
         <tr>
        <td>Unique Wallet Address of Student</td>
        <td><input id="studentAddress" type="text"></td>
-        </tr>
-        <tr>
-        <td>Subject</td>
-        <td><input id="Subject" type="text"></td>
         </tr>
         <tr>
         <td>Marks</td>
@@ -39,20 +39,20 @@
         
         
         
-function NewClickFunction() {
-    var nameValue = document.getElementById("Name");
-    var addressValue = document.getElementById("studentAddress");
-        var subjectValue = document.getElementById("Subject");
+        function NewClickFunction() {
+            
+            var nameValue = document.getElementById("Name");
+            var addressValue = document.getElementById("studentAddress");
             var marksValue = document.getElementById("Marks");
-
-
+            var idValue = document.getElementById("studentId");
+            
+            //calling function addStudent()
+            addStudent(addressValue, idValue, nameValue, marksValue);
     
 }
-
         
         
         var universityContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_can_edit","type":"bool"}],"name":"editProfessor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"countStudents","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getProfessor","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getStudent","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getProfessors","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"studentsAccts","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"getStudentWithPrivateInfo","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"countProfessors","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_view_private_info","type":"bool"},{"name":"_marks","type":"uint256"}],"name":"editStudent","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_can_edit","type":"bool"}],"name":"setProfessor","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_id","type":"uint256"},{"name":"_name","type":"string"},{"name":"_view_private_info","type":"bool"},{"name":"_marks","type":"uint256"}],"name":"setStudent","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getStudents","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"professorAccts","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]);
-
         var ownerAddress = '0x42C1519f7eB9a2489Df78fD6B9a81ec480593a8E';
         
         var universityContractAddress = '0x76B3Ce6ad64F95C68150ABBda0A6cd1df871c31F';
@@ -79,15 +79,9 @@ function NewClickFunction() {
             
         }
         
-
-        function addStudent(){
+        function addStudent(studentAddress, studentId, studentName, studentMarks){
             
-            var studentAddress = '0x21ef95FAE948145A52055F4c2cf9Fa0eeAf9f1e5';
-            var studentId = 1;
-            var studentName = 'Student 1';
             var privateInfoCondtn = true;
-            var studentMarks = 70;
-            
             
             universityContract.at(universityContractAddress).setStudent(studentAddress, studentId, studentName, privateInfoCondtn, studentMarks, function(err, data){
                 
@@ -143,4 +137,5 @@ function NewClickFunction() {
 
 
 </body>
+
 </html>
